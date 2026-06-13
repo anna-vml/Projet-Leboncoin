@@ -33,38 +33,52 @@ if(!$annonce) {
 
 <div class="container mt-5">
 
-    <div class="card">
+    
+
+    <div class="col-md-6">
 
         <img
-            src="uploads/<?= $annonce['image'] ?>"
-            class="card-img-top"
-            style="height:400px; object-fit:cover;"
-        >
-
-        <div class="card-body">
-
-            <h2>
-                <?= htmlspecialchars($annonce['titre']) ?>
-            </h2>
-
-            <h3 class="text-success">
-                <?= $annonce['prix'] ?> €
-            </h3>
-
-            <p>
-                <strong>État :</strong>
-                <?= htmlspecialchars($annonce['etat']) ?>
-            </p>
-
-            <p>
-                <?= nl2br(htmlspecialchars($annonce['description'])) ?>
-            </p>
-
-            <a href="index.php" class="btn btn-secondary">
-                Retour
-            </a>
+           src="uploads/<?= htmlspecialchars($annonce['image']) ?>"
+            class="img-fluid rounded-start"
+            style="height:400px; width:100%; object-fit:cover;"
+            >
 
         </div>
+
+        <div class="col-md-6">
+
+            <div class="card-body">
+
+                <h2><?= htmlspecialchars($annonce['titre']) ?></h2>
+
+                <h3 class="text-success">
+                    <?= $annonce['prix'] ?> €
+                </h3>
+
+                <p>
+                    <strong>État :</strong>
+                    <?= htmlspecialchars($annonce['etat']) ?>
+                </p>
+
+                <hr>
+
+                <p>
+                    <?= nl2br(htmlspecialchars($annonce['description'])) ?>
+                </p>
+
+                <a href="index.php" class="btn btn-secondary">
+                    Retour
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+            
+
 
     </div>
 
