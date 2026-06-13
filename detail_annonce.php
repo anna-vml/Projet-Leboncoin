@@ -1,0 +1,74 @@
+<?php
+
+require 'config.php';
+
+if(!isset($_GET['id'])) {
+    die("Annonce introuvable");
+}
+
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM annonces WHERE id = ?";
+$requete = $pdo->prepare($sql);
+$requete->execute([$id]);
+
+$annonce = $requete->fetch();
+
+if(!$annonce) {
+    die("Annonce inexistante");
+}
+
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Détail annonce</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <div class="card">
+
+        <img
+            src="uploads/<?= $annonce['image'] ?>"
+            class="card-img-top"
+            style="height:400px; object-fit:cover;"
+        >
+
+        <div class="card-body">
+
+            <h2>
+                <?= htmlspecialchars($annonce['titre']) ?>
+            </h2>
+
+            <h3 class="text-success">
+                <?= $annonce['prix'] ?> €
+            </h3>
+
+            <p>
+                <strong>État :</strong>
+                <?= htmlspecialchars($annonce['etat']) ?>
+            </p>
+
+            <p>
+                <?= nl2br(htmlspecialchars($annonce['description'])) ?>
+            </p>
+
+            <a href="index.php" class="btn btn-secondary">
+                Retour
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
