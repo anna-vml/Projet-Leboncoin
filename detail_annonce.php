@@ -27,20 +27,22 @@ if(!$annonce) {
     <title>Détail annonce</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
     
 
-    <div class="col-md-6">
+        <div class="col-md-6">
+        
 
-        <img
-           src="uploads/<?= htmlspecialchars($annonce['image']) ?>"
-            class="img-fluid rounded-start"
-            style="height:400px; width:100%; object-fit:cover;"
+          <img
+             src="uploads/<?= htmlspecialchars($annonce['image']) ?>"
+             class="img-fluid rounded-start"
+             class="img-fluid rounded-start detail-image"
             >
 
         </div>
@@ -51,7 +53,7 @@ if(!$annonce) {
 
                 <h2><?= htmlspecialchars($annonce['titre']) ?></h2>
 
-                <h3 class="text-success">
+                <h3 class="prix">
                     <?= $annonce['prix'] ?> €
                 </h3>
 
@@ -75,14 +77,6 @@ if(!$annonce) {
         </div>
 
     </div>
-
-</div>
-            
-
-
-    </div>
-
-</div>
 
 </body>
 </html>
