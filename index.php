@@ -31,7 +31,7 @@ $annonces = $requete->fetchAll();
         <div class="container">
 
           <a class="navbar-brand fw-bold" href="index.php">
-            📚LeBoncoinÉtudiant
+            📚Campus Market
           </a>
 
           <span class="text-muted">
@@ -45,7 +45,7 @@ $annonces = $requete->fetchAll();
        <div class="p-4 bg-white rounded shadow-sm text-center">
 
            <h2>
-              Bienvenue sur LeBoncoinÉtudiant
+              Bienvenue sur Campus Market
            </h2>
            <p class="text-muted">
               La plateforme de petites annonces dédiée aux étudiants.
