@@ -105,12 +105,16 @@ $annonces = $requete->fetchAll();
                             </p>
 
                             <a
-                              href="detail_annonce.php?id=<?= $annonce['id'] ?>"
-                              class="btn btn-primary"
-                              >
-                              Voir l'annonce
-                            </a>
+href="detail_annonce.php?id=<?= $annonce['id'] ?>"
+class="btn btn-primary">
+Voir l'annonce
+</a>
 
+<a
+href="favoris.php?id=<?= $annonce['id'] ?>"
+class="btn btn-warning">
+Ajouter aux favoris
+</a>
                         </div>
 
                     </div>
