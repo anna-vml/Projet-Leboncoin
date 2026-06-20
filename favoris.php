@@ -2,11 +2,11 @@
 session_start();
 require_once("includes_db.php");
 
-if (!isset($_SESSION['id'])) {
+if (!isset($_SESSION['user_id'])) {
     die("Connectez-vous d'abord.");
 }
 
-$id_utilisateur = $_SESSION['id'];
+$id_utilisateur = $_SESSION['user_id'];
 $id_annonce = $_GET['id'];
 
 $sql = "INSERT INTO favoris (id_utilisateur, id_annonce)
