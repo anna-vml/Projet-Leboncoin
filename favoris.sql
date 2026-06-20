@@ -1,11 +1,7 @@
-CREATE TABLE discussions (
+CREATE TABLE favoris (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    annonce_id INT NOT NULL,
-    acheteur_id INT NOT NULL,
-    vendeur_id INT NOT NULL,
-    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_utilisateur INT NOT NULL,
+    id_annonce INT NOT NULL,
 
-    FOREIGN KEY (annonce_id) REFERENCES annonces(id) ON DELETE CASCADE,
-    FOREIGN KEY (acheteur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE,
-    FOREIGN KEY (vendeur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE
-);
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_annonce) REFERENCES annonces(id) ON DELETE CASCADE
