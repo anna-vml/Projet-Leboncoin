@@ -84,51 +84,60 @@
         </form>
         <h2 class="section-title">Dernières annonces</h2>
         <div class="row">
+           <?php if (empty($annonces)): ?>
+
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        Aucune annonce trouvée.
+                    </div>
+                </div>
+
+            <?php else: ?>
           
-           <?php foreach($annonces as $annonce): ?>
+                <?php foreach($annonces as $annonce): ?>
 
-                <div class="col-md-3 mb-4">
+                   <div class="col-md-3 mb-4">
 
-                   <div class="card h-100">
+                      <div class="card h-100">
 
-                       <img
-                           src="uploads/<?= $annonce['image'] ?>"
-                           class="card-img-top"
-                           style="height:220px; object-fit:cover;"
-                        >
+                          <img
+                             src="uploads/<?= $annonce['image'] ?>"
+                              class="card-img-top"
+                              style="height:220px; object-fit:cover;"
+                            >
 
-                        <div class="card-body">
+                            <div class="card-body">
 
-                          <h5>
-                             <?= htmlspecialchars($annonce['titre']) ?>
-                           </h5>
+                              <h5>
+                                 <?= htmlspecialchars($annonce['titre']) ?>
+                              </h5>
 
-                           <p class="fw-bold text-success">
-                              <?= $annonce['prix'] ?> €
-                            </p>
+                               <p class="fw-bold text-success">
+                                 <?= $annonce['prix'] ?> €
+                                </p>
 
-                            <p class="text-muted small">
-                               Publié le <?= date('d/m/Y à H:i', strtotime($annonce['date_creation'])) ?>
-                            </p>
+                                <p class="text-muted small">
+                                   Publié le <?= date('d/m/Y à H:i', strtotime($annonce['date_creation'])) ?>
+                               </p>
 
-                               <p class="text-muted small">
+                                <p class="text-muted small">
                                   Publié par <?= htmlspecialchars($annonce['nom'] ?? 'Utilisateur') ?>
                                 </p>
-                            <a
-                              href="detail_annonce.php?id=<?= $annonce['id'] ?>"
-                              class="btn btn-primary"
-                              >
-                              Voir l'annonce
-                            </a>
+                                <a
+                                  href="detail_annonce.php?id=<?= $annonce['id'] ?>"
+                                  class="btn btn-primary"
+                                >
+                                  Voir l'annonce
+                                </a>
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
-
-            <?php endforeach; ?>
-
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
 
     </div>
