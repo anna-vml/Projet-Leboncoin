@@ -1,101 +1,118 @@
-INSERT INTO annonces (titre, prix, etat, description, image) VALUES
- ('Calculatrice Casio Graph 35+',35,'Bon état',
-'Calculatrice graphique idéale pour les étudiants en informatique, mathématiques et économie.',
+INSERT INTO annonces
+(utilisateur_id, titre, prix, etat, description, image)
+VALUES
+(1, 'Calculatrice Casio Graph 35+', 35.00, 'Bon état',
+'Calculatrice graphique idéale pour les études scientifiques.',
 'calculatrice.jpg'),
 
-('Bureau étudiant blanc',40,'Bon état',
-'Bureau compact parfait pour une chambre étudiante. Plusieurs rangements inclus.',
+(1, 'Bureau étudiant', 40.00, 'Bon état',
+'Petit bureau blanc pratique pour travailler dans une chambre étudiante.',
 'bureau.jpg'),
 
-('Chaise de bureau',20,'Bon état',
-'Chaise confortable réglable en hauteur. Idéale pour travailler plusieurs heures.',
+(1, 'Chaise de bureau', 20.00, 'Bon état',
+'Chaise confortable réglable en hauteur.',
 'chaise.jpg'),
 
-('Ordinateur Lenovo IdeaPad',220,'Très bon état',
-'Ordinateur portable Lenovo avec SSD rapide. Convient pour les cours et projets universitaires.',
+(1, 'Ordinateur Lenovo IdeaPad', 220.00, 'Très bon état',
+'PC portable Lenovo avec 8 Go de RAM et SSD 256 Go.',
 'lenovo.jpg'),
 
-(‘Écran Samsung 24 pouces',60,'Très bon état',
-'Écran Full HD pour travailler plus confortablement sur ses projets.',
+(1, 'Écran 24 pouces Samsung', 60.00, 'Très bon état',
+'Écran Full HD 24 pouces. Idéal pour travailler avec un ordinateur portable.',
 'ecran.jpg'),
 
-('Livre Algorithmique',10,'Bon état',
+(1, 'Livre Algorithmique', 10.00, 'Bon état',
 'Livre d algorithmique utilisé en première année informatique.',
 'algorithme.jpg'),
 
-('Vélo étudiant',80,'Bon état',
-'Vélo pratique pour se déplacer entre le logement et l université.',
-'velo.jpg’),
-('Air Fryer Philips', 45, 'Très bon état',
-'Utilisée pendant un semestre. Idéale pour cuisiner rapidement dans un studio étudiant.',
-'airfryer.jpg'),
-('Roman La Femme de ménage', 10, 'Très bon état',
-'Roman à succès de Freida McFadden. Lu une seule fois, état impeccable.',
+(2, 'Livre Base de Données SQL', 12.00, 'Très bon état',
+'Livre complet pour apprendre SQL et MySQL.',
+'sql.jpg'),
+
+(2, 'Vélo étudiant', 80.00, 'Bon état',
+'Vélo de ville pratique pour les trajets entre le logement et le campus.',
+'velo.jpg'),
+
+(2, 'Micro-ondes', 25.00, 'Bon état',
+'Micro-ondes fonctionnel. Idéal pour équiper un studio étudiant.',
+'microondes.jpg'),
+
+(2, 'Lampe de bureau LED', 15.00, 'Comme neuf',
+'Lampe LED avec plusieurs niveaux de luminosité.',
+'lampe.jpg'),
+
+(2, 'Roman La Femme de ménage', 10.00, 'Très bon état',
+'Roman à succès de Freida McFadden. Lu une seule fois.',
 'femmedemenage.jpg'),
 
-('Livre Atomic Habits', 12, 'Très bon état',
-'Livre sur les habitudes et l organisation. Très utile pour les étudiants.',
+(2, 'Livre Atomic Habits', 12.00, 'Très bon état',
+'Livre sur les habitudes et l organisation.',
 'atomichabits.jpg'),
 
-('Livre Python pour débutants', 15, 'Très bon état',
-'Livre clair et facile à comprendre pour apprendre Python.',
+(3, 'Livre Python pour débutants', 15.00, 'Très bon état',
+'Livre clair pour apprendre Python.',
 'python.jpg'),
 
-('Pack de cahiers universitaires', 5, 'Comme neuf',
+(3, 'Pack de cahiers universitaires', 5.00, 'Comme neuf',
 'Lot de 5 cahiers grands formats presque jamais utilisés.',
 'cahiers.jpg'),
 
-('Trousse complète', 4, 'Bon état',
+(3, 'Trousse complète', 4.00, 'Bon état',
 'Trousse avec stylos, surligneurs et crayons.',
 'trousse.jpg'),
 
-('Imprimante Canon', 35, 'Bon état',
-'Imprimante fonctionnelle. Vendue avec câble d alimentation.',
+(3, 'Imprimante Canon', 35.00, 'Bon état',
+'Imprimante fonctionnelle avec câble d alimentation.',
 'imprimante.jpg'),
 
-('Tablette Samsung Galaxy Tab', 90, 'Bon état',
+(3, 'Tablette Samsung Galaxy Tab', 90.00, 'Bon état',
 'Pratique pour prendre des notes en cours et lire les PDF.',
 'tablette.jpg'),
 
-('Bibliothèque IKEA blanche', 30, 'Bon état',
+(3, 'Bibliothèque IKEA blanche', 30.00, 'Bon état',
 'Bibliothèque idéale pour ranger les cours et les romans.',
 'bibliotheque.jpg'),
 
-('Roman Normal People', 9, 'Bon état',
+(4, 'Roman Normal People', 9.00, 'Bon état',
 'Roman contemporain très apprécié des étudiants.',
 'normalpeople.jpg'),
 
-('Calculatrice Casio FX92', 10, 'Très bon état',
+(4, 'Calculatrice Casio FX92', 10.00, 'Très bon état',
 'Calculatrice scientifique utilisée en lycée et université.',
-'fx92.jpg');
-('Machine à café Nespresso', 30, 'Bon état',
+'fx92.jpg'),
+
+(4, 'Air Fryer Philips', 45.00, 'Très bon état',
+'Utilisée pendant un semestre. Idéale pour cuisiner rapidement.',
+'airfryer.jpg'),
+
+(4, 'Machine à café Nespresso', 30.00, 'Bon état',
 'Fonctionne parfaitement. Vendue avec quelques capsules.',
 'nespresso.jpg'),
 
-('Trottinette Xiaomi', 120, 'Bon état',
+(4, 'Trottinette Xiaomi', 120.00, 'Bon état',
 'Pratique pour aller en cours. Batterie en bon état.',
 'trottinette.jpg'),
 
-('Casque Sony Bluetooth', 55, 'Très bon état',
+(4, 'Casque Sony Bluetooth', 55.00, 'Très bon état',
 'Bonne qualité sonore pour écouter de la musique ou suivre les cours en ligne.',
 'casquesony.jpg'),
 
-('Enceinte Bluetooth JBL', 28, 'Bon état',
+(5, 'Enceinte Bluetooth JBL', 28.00, 'Bon état',
 'Petite enceinte avec un bon son et une bonne autonomie.',
 'jbl.jpg'),
 
-('Sac Eastpak noir', 18, 'Bon état',
+(5, 'Sac Eastpak noir', 18.00, 'Bon état',
 'Sac solide avec compartiment pour ordinateur portable.',
 'eastpak.jpg'),
 
-('Lampe de chevet LED', 10, 'Comme neuf',
+(4, 'Lampe de chevet LED', 10.00, 'Comme neuf',
 'Lampe moderne avec intensité réglable.',
 'lampeled.jpg'),
 
-('Mini projecteur vidéo', 65, 'Bon état',
+(3, 'Mini projecteur vidéo', 65.00, 'Bon état',
 'Pratique pour regarder des films entre amis dans une chambre étudiante.',
 'projecteur.jpg'),
 
-('Plaid polaire', 8, 'Comme neuf',
+(2, 'Plaid polaire', 8.00, 'Comme neuf',
 'Très confortable pour les soirées d hiver.',
-'plaid.jpg’);
+'plaid.jpg');
