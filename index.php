@@ -1,20 +1,22 @@
 <?php
-require 'config.php';
+  require 'config.php';
 
-$recherche = "";
+  $recherche = "";
 
-if(isset($_GET['recherche'])) {
-    $recherche = $_GET['recherche'];
-}
+   if(isset($_GET['recherche'])) {
+      $recherche = $_GET['recherche'];
+    }
 
-$sql = "SELECT * FROM annonces
-        WHERE titre LIKE ?
-        ORDER BY date_creation DESC";
+    $sql = "SELECT annonces.*, utilisateurs.nom
+        FROM annonces
+        LEFT JOIN utilisateurs
+        ON annonces.utilisateur_id = utilisateurs.id
+        WHERE annonces.titre LIKE ?
+        ORDER BY annonces.date_creation DESC";
 
-$requete = $pdo->prepare($sql);
-$requete->execute(["%$recherche%"]);
-
-$annonces = $requete->fetchAll();
+    $requete = $pdo->prepare($sql);
+    $requete->execute(["%$recherche%"]);
+    $annonces = $requete->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -23,29 +25,30 @@ $annonces = $requete->fetchAll();
     <title>Leboncoin</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=2">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
 
-          <a class="navbar-brand fw-bold" href="index.php">
-            📚Campus Market
+           <a class="navbar-brand fw-bold logo-campus" href="index.php">
+              
+               <div>
+                 <div> 🎓 Campus  <span>Market</span></div>
+                 <small>ACHAT ET VENTE ENTRE ÉTUDIANTS</small>
+             </div>
           </a>
-
-          <span class="text-muted">
-              Achat et vente entre étudiants
-           </span>
 
         </div>
     </nav>
     <div class="container mt-4">
 
-       <div class="p-4 bg-white rounded shadow-sm text-center">
-
-           <h2>
-              Bienvenue sur Campus Market
+        <div class="campus-banner">
+           <h2 class="titre-campus">
+              Bienvenue sur 
+              <br>
+              <span>Campus Market</span>
            </h2>
            <p class="text-muted">
               La plateforme de petites annonces dédiée aux étudiants.
@@ -79,12 +82,12 @@ $annonces = $requete->fetchAll();
             </div>
 
         </form>
-
+        <h2 class="section-title">Dernières annonces</h2>
         <div class="row">
-
+          
            <?php foreach($annonces as $annonce): ?>
 
-               <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
 
                    <div class="card h-100">
 
@@ -104,17 +107,20 @@ $annonces = $requete->fetchAll();
                               <?= $annonce['prix'] ?> €
                             </p>
 
-                            <a
-href="detail_annonce.php?id=<?= $annonce['id'] ?>"
-class="btn btn-primary">
-Voir l'annonce
-</a>
+                            <p class="text-muted small">
+                               Publié le <?= date('d/m/Y à H:i', strtotime($annonce['date_creation'])) ?>
+                            </p>
 
-<a
-href="favoris.php?id=<?= $annonce['id'] ?>"
-class="btn btn-warning">
-Ajouter aux favoris
-</a>
+                               <p class="text-muted small">
+                                  Publié par <?= htmlspecialchars($annonce['nom'] ?? 'Utilisateur') ?>
+                                </p>
+                            <a
+                              href="detail_annonce.php?id=<?= $annonce['id'] ?>"
+                              class="btn btn-primary"
+                              >
+                              Voir l'annonce
+                            </a>
+
                         </div>
 
                     </div>
