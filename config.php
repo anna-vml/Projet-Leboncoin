@@ -3,7 +3,7 @@
 $host = "localhost";
 $dbname = "leboncoin";
 $user = "root";
-$password = "root";
+$password = "";
 
 try {
     $pdo = new PDO(
