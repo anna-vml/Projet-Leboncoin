@@ -39,6 +39,45 @@
                  <small>ACHAT ET VENTE ENTRE ÉTUDIANTS</small>
              </div>
           </a>
+            <div class="d-flex gap-2">
+              
+             
+
+             <a href="index.php" class="btn btn-light">Accueil</a>
+             <a href="favoris.php" class="btn btn-light">Favoris</a>
+
+
+
+                <?php if(isset($_SESSION['user_id'])) { ?>
+
+                 <a href="profil.php" class="btn btn-light">Profil</a>
+
+                  <a href="creer_annonce.php" class="btn btn-light">Créer annonce</a>
+
+                  <a href="mes_annonces.php" class="btn btn-light">Mes annonces</a>
+
+                  <a href="favoris.php" class="btn btn-light">Favoris</a>
+
+                   <?php if($_SESSION['user_role'] == 'admin') { ?>
+                     <a href="admin_utilisateurs.php" class="btn btn-light">Admin</a>
+                   <?php } ?>
+
+                 <a href="action_deconnexion.php" class="btn btn-warning">
+                    Déconnexion
+                 </a>
+
+                <?php } 
+                else { ?>
+
+                   <a href="connexion.php" class="btn btn-light">Connexion</a>
+
+                   <a href="inscription.php" class="btn btn-light">Inscription</a>
+
+                <?php } ?>
+
+            </div>
+
+            
 
         </div>
     </nav>
@@ -128,6 +167,12 @@
                                   class="btn btn-primary"
                                 >
                                   Voir l'annonce
+                                </a>
+                                <a
+                                  href="favoris.php?id=<?= $annonce['id'] ?>"
+                                  class="btn btn-outline-danger mt-2"
+                                >
+                                   ❤️ Ajouter aux favoris
                                 </a>
 
                             </div>
