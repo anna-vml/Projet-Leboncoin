@@ -71,6 +71,11 @@ if(!$annonce) {
                 <a href="index.php" class="btn btn-secondary">
                     Retour
                 </a>
+                <br> 
+                <a href="conversation.php?annonce=<?= $annonce['id'] ?>"
+                   class="btn btn-success">
+                   💬 Contacter le vendeur
+                </a>
 
             </div>
 
