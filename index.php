@@ -1,4 +1,5 @@
 <?php
+  session_start();
   require 'config.php';
 
   $recherche = "";
@@ -25,7 +26,7 @@
     <title>Leboncoin</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css?v=2">
+    <link rel="stylesheet" href="assets/style.css?v=11">
 </head>
 
 <body>
@@ -44,7 +45,7 @@
              
 
              <a href="index.php" class="btn btn-light">Accueil</a>
-             <a href="favoris.php" class="btn btn-light">Favoris</a>
+             
 
 
 
@@ -57,6 +58,7 @@
                   <a href="mes_annonces.php" class="btn btn-light">Mes annonces</a>
 
                   <a href="favoris.php" class="btn btn-light">Favoris</a>
+                  <a href="discussions.php" class="btn btn-light">Messages</a>
 
                    <?php if($_SESSION['user_role'] == 'admin') { ?>
                      <a href="admin_utilisateurs.php" class="btn btn-light">Admin</a>
@@ -93,9 +95,49 @@
               La plateforme de petites annonces dédiée aux étudiants.
             </p>
 
-           
 
         </div>
+        <div class="categories-section">
+
+           <h2 class="section-title">Catégories étudiantes</h2>
+
+            <div class="categories-grid">
+
+               <a href="index.php?recherche=livre" class="categorie-card">
+                  <span>📚</span>
+                   <p>Livres & cours</p>
+                </a>
+
+               <a href="index.php?recherche=calculatrice" class="categorie-card">
+                 <span>🧮</span>
+                 <p>Matériel scolaire</p>
+               </a>
+
+               <a href="index.php?recherche=ordinateur" class="categorie-card">
+                  <span>💻</span>
+                  <p>Informatique</p>
+                </a>
+
+               <a href="index.php?recherche=bureau" class="categorie-card">
+                  <span>🪑</span>
+                  <p>Meubles</p>
+                </a>
+
+                <a href="index.php?recherche=v%C3%A9lo" class="categorie-card">
+                  <span>🚲</span>
+                  <p>Transport</p>
+                </a>
+
+                <a href="index.php?recherche=lampe" class="categorie-card">
+                  <span>🏠</span>
+                  <p>Studio</p>
+                </a>
+
+            </div>
+        </div>
+    </div>   
+
+</div>
 
     </div>
 
@@ -168,13 +210,12 @@
                                 >
                                   Voir l'annonce
                                 </a>
-                                <a
-                                  href="favoris.php?id=<?= $annonce['id'] ?>"
-                                  class="btn btn-outline-danger mt-2"
-                                >
-                                   ❤️ Ajouter aux favoris
-                                </a>
+                                
 
+                    
+                                <a href="ajouter_favoris.php?id=<?= $annonce['id'] ?>" class="btn btn-outline-danger mt-2 w-100">
+                                    ❤️ Ajouter aux favoris
+                                </a>
                             </div>
 
                         </div>
