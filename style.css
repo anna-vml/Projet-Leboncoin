@@ -1,77 +1,271 @@
-body {
-    background-color: #f5f5f5;
-    font-family: Arial, sans-serif;
+body{
+    background:#f5f6fa;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* Titre principal */
-h1 {
+/* NAVBAR */
+.navbar{
+    background: linear-gradient(90deg,#071952,#0b3b8c);
+    padding:15px 0;
+}
+
+.navbar-brand{
+    color:#d4a64a !important;
+    font-size:32px;
+    font-weight:bold;
+}
+
+.navbar span{
+    color:white !important;
+}
+
+/* BANNIERE */
+.campus-banner{
+    background:white;
+    border-radius:25px;
+    padding:40px;
+    margin-bottom:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.campus-banner h2{
+    font-size:50px;
+    font-weight:800;
+    color:#071952;
+}
+
+.campus-banner h2 span{
+    color:#d4a64a;
+}
+
+.campus-banner p{
+    color:#555;
+    font-size:20px;
+}
+
+/* RECHERCHE */
+.form-control{
+    height:60px;
+    border-radius:15px 0 0 15px;
+}
+
+.btn-primary{
+    background:#071952;
+    border:none;
+    border-radius:0 15px 15px 0;
+    padding:0 30px;
+}
+
+.btn-primary:hover{
+    background:#0b3b8c;
+}
+
+/* CARTES */
+.card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    transition:0.3s;
+    box-shadow:0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card img{
+    height:250px;
+    object-fit:cover;
+}
+
+/* TITRE ANNONCE */
+.card h5{
+    font-size:30px;
+    font-weight:700;
+    color:#071952;
+}
+
+/* PRIX */
+.text-success{
+    color:#d4a64a !important;
+    font-size:35px;
+    font-weight:bold;
+}
+
+/* BOUTON VOIR */
+.card .btn-primary{
+    background:#071952;
+    border-radius:12px;
+    color:white;
+}
+
+.card .btn-primary:hover{
+    background:#0b3b8c;
+}
+
+/* DETAILS */
+.prix{
+    color:#d4a64a;
+    font-size:40px;
+    font-weight:bold;
+}
+
+
+.logo-campus {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white !important;
+    font-size: 2rem;
     font-weight: 800;
-    color: #ff6e14;
+    text-decoration: none;
 }
 
-/* Cartes */
-.card {
-    border: none;
-    border-radius: 12px;
+.logo-campus span {
+    color: #d4a64a;
+}
+.logo-campus small {
+    display: block;
+    color: #d4a64a;
+    font-size: 0.8rem;
+    font-weight: 500;
+     text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 3px;
+}
+.campus-banner {
+    background: white;
+    border: 2px solid #d4a64a;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.card{
+    border-radius:20px;
+    overflow:hidden;
+    
+}
+.card img{
+    width:100%;
+    height:180px;
+    object-fit:contain;
+    background:white;
+    padding:10px;
+}
+
+.card-body{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.card h5{
+    font-size:1.1rem;
+    font-weight:600;
+    margin-bottom: 8px;
+}
+
+.text-success{
+    font-size:1.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color:#d4a537 !important;
+}
+
+.btn-primary{
+    padding:6px 16px;
+    font-size:0.9rem;
+}
+.card-body{
+    padding:15px;
+}
+.section-title {
+    color: #071952;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+/* Boutons navbar */
+.navbar .btn {
     background-color: white;
-    overflow: hidden;
+    color: #06164f;
+    border: 2px solid white;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 9px 18px;
     transition: 0.2s;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+.navbar .btn:hover {
+    background-color: #d8a63a;
+    border-color: #d8a63a;
+    color: white;
+    transform: translateY(-2px);
 }
 
-/* Images */
-.card img {
-    height: 230px;
-    width: 100%;
-    object-fit: cover;
+/* Bouton actif / joli */
+.navbar .btn-light {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
 }
 
-/* Prix */
-.text-success {
-    color: #ff6e14 !important;
-    font-size: 1.4rem;
-    font-weight: bold;
+/* Bouton déconnexion si tu l'ajoutes après connexion */
+.navbar .btn-warning {
+    background-color: #d8a63a;
+    border-color: #d8a63a;
+    color: #06164f;
+    font-weight: 800;
 }
 
-/* Boutons */
-.btn-primary {
-    background-color: #ff6e14;
-    border-color: #ff6e14;
-    border-radius: 8px;
-    font-weight: 600;
+.navbar .btn-warning:hover {
+    background-color: white;
+    color: #06164f;
 }
 
-.btn-primary:hover {
-    background-color: #e65f0c;
-    border-color: #e65f0c;
+.categories-section {
+    margin: 35px 0;
 }
 
-/* Barre de recherche */
-.form-control {
-    border-radius: 8px 0 0 8px;
+.categories-grid {
+    display: flex !important;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-/* Bannière Campus */
-.campus-banner {
+.categorie-card {
+    width: 160px;
+    height: 125px;
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-radius: 18px;
+    text-decoration: none !important;
+    color: #06164f !important;
+    font-weight: 800;
+
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+    transition: 0.25s;
 }
 
-/* Navbar */
-.navbar {
-    background-color: #ff6e14 !important;
+.categorie-card span {
+    font-size: 34px;
+    margin-bottom: 8px;
 }
 
-.navbar-brand {
-    color: white !important;
-    font-weight: bold;
-    font-size: 1.4rem;
+.categorie-card p {
+    margin: 0;
 }
+
+.categorie-card:hover {
+    transform: translateY(-5px);
+    border-color: #d8a63a;
+    color: #d8a63a !important;
+}
+
