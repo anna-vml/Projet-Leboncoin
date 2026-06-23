@@ -2,6 +2,14 @@
 session_start();
 require 'connexion.php';
 
+if (!isset($_SESSION['user_id'])) {
+    die("Vous devez être connecté pour accéder à cette page");
+}
+
+if (!isset($_GET['id'])) {
+    die("Annonce introuvable");
+}
+
 $id = $_GET['id'];
 $sql = "SELECT * FROM annonces WHERE id = ?";
 $stmt = $pdo->prepare($sql);
@@ -20,6 +28,7 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Modifier l'annonce - Campus Market</title>
 <style>
     :root {
@@ -30,6 +39,9 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
         --gris-clair: #f5f6fa;
         --gris-bordure: #e0e0e0;
         --texte-fonce: #1a1a2e;
+        --texte-muted: #6b6f7d;
+        --vert: #2e9e5b;
+        --vert-fonce: #237e47;
     }
 
     * {
@@ -42,6 +54,7 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
         font-family: 'Segoe UI', Arial, sans-serif;
         background-color: var(--gris-clair);
         color: var(--texte-fonce);
+        min-height: 100vh;
     }
 
     /* ===== HEADER ===== */
@@ -53,9 +66,21 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
         justify-content: space-between;
         flex-wrap: wrap;
         gap: 12px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
     }
 
     .logo-bloc {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo-bloc .icone {
+        font-size: 1.6rem;
+        color: var(--dore-clair);
+    }
+
+    .logo-bloc .textes {
         display: flex;
         flex-direction: column;
     }
@@ -64,6 +89,7 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
         color: #ffffff;
         font-size: 1.7rem;
         font-weight: 800;
+        line-height: 1.2;
     }
 
     .logo-bloc span {
@@ -71,61 +97,86 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
         font-size: 0.7rem;
         letter-spacing: 1px;
         font-weight: 600;
+        text-transform: uppercase;
     }
 
     nav {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         flex-wrap: wrap;
     }
 
     nav a {
         text-decoration: none;
-        background-color: #ffffff;
-        color: var(--bleu-marine);
-        padding: 10px 18px;
+        background-color: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        padding: 9px 18px;
         border-radius: 8px;
         font-weight: 700;
-        font-size: 0.95rem;
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
     }
 
     nav a:hover {
+        background-color: rgba(255, 255, 255, 0.18);
+        color: var(--dore-clair);
         transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
     nav a.deconnexion {
-        background-color: var(--dore);
+        background: linear-gradient(135deg, var(--dore), var(--dore-clair));
         color: var(--bleu-marine);
+        border: none;
+    }
+
+    nav a.deconnexion:hover {
+        color: var(--bleu-marine);
+        filter: brightness(1.05);
     }
 
     /* ===== CONTENU ===== */
     main {
         max-width: 600px;
-        margin: 40px auto;
+        margin: 50px auto;
         padding: 0 20px;
+    }
+
+    .fil-retour {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--bleu-marine);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: color 0.2s ease;
+    }
+
+    .fil-retour:hover {
+        color: var(--dore);
     }
 
     .carte-formulaire {
         background-color: #ffffff;
-        border: 1px solid var(--dore);
+        border: 1px solid #eceef5;
+        border-top: 4px solid var(--dore);
         border-radius: 14px;
         padding: 35px 40px;
-        box-shadow: 0 4px 18px rgba(10, 31, 92, 0.08);
+        box-shadow: 0 8px 24px rgba(10, 31, 92, 0.10);
     }
 
     .carte-formulaire h2 {
         color: var(--bleu-marine);
         font-size: 1.6rem;
+        font-weight: 800;
         margin-bottom: 6px;
     }
 
     .carte-formulaire .soustitre {
-        color: var(--dore);
-        font-weight: 700;
-        margin-bottom: 25px;
-        font-size: 1rem;
+        color: var(--texte-muted);
+        font-weight: 500;
+        margin-bottom: 28px;
+        font-size: 0.95rem;
     }
 
     label {
@@ -160,10 +211,17 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
     textarea {
         min-height: 120px;
         resize: vertical;
+        line-height: 1.5;
+    }
+
+    .boutons {
+        display: flex;
+        gap: 12px;
+        margin-top: 6px;
     }
 
     button[type="submit"] {
-        width: 100%;
+        flex: 1;
         background-color: var(--bleu-marine);
         color: #ffffff;
         border: none;
@@ -180,14 +238,59 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
         color: var(--bleu-marine);
         transform: translateY(-1px);
     }
+
+    a.btn-annuler {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 22px;
+        border: 2px solid var(--bleu-marine);
+        color: var(--bleu-marine);
+        font-weight: 700;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    a.btn-annuler:hover {
+        background-color: var(--bleu-marine);
+        color: #ffffff;
+    }
+
+    footer {
+        text-align: center;
+        padding: 22px 16px;
+        color: var(--texte-muted);
+        font-size: 0.85rem;
+        margin-top: 30px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+        header {
+            padding: 16px 20px;
+        }
+
+        .carte-formulaire {
+            padding: 28px 24px;
+        }
+
+        .boutons {
+            flex-direction: column;
+        }
+    }
 </style>
 </head>
 <body>
 
 <header>
     <div class="logo-bloc">
-        <h1>Campus Market</h1>
-        <span>ACHAT ET VENTE ENTRE ÉTUDIANTS</span>
+        <span class="icone">🚩</span>
+        <div class="textes">
+            <h1>Campus Market</h1>
+            <span>Achat et vente entre étudiants</span>
+        </div>
     </div>
     <nav>
         <a href="accueil.php">Accueil</a>
@@ -200,6 +303,8 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
 </header>
 
 <main>
+    <a href="mes_annonces.php" class="fil-retour">← Retour à mes annonces</a>
+
     <div class="carte-formulaire">
         <h2>Modifier l'annonce</h2>
         <p class="soustitre">Mettez à jour les informations de votre annonce</p>
@@ -211,22 +316,34 @@ if ($annonce['utilisateur_id'] != $_SESSION['user_id']) {
             <input type="text"
                    id="titre"
                    name="titre"
-                   value="<?= htmlspecialchars($annonce['titre']) ?>">
+                   value="<?= htmlspecialchars($annonce['titre']) ?>"
+                   required>
 
             <label for="prix">Prix (€)</label>
             <input type="number"
                    id="prix"
                    step="0.01"
+                   min="0"
                    name="prix"
-                   value="<?= htmlspecialchars($annonce['prix']) ?>">
+                   value="<?= htmlspecialchars($annonce['prix']) ?>"
+                   required>
 
             <label for="description">Description</label>
-            <textarea id="description" name="description"><?= htmlspecialchars($annonce['description']) ?></textarea>
+            <textarea id="description"
+                      name="description"
+                      required><?= htmlspecialchars($annonce['description']) ?></textarea>
 
-            <button type="submit">Modifier l'annonce</button>
+            <div class="boutons">
+                <button type="submit">Enregistrer les modifications</button>
+                <a href="mes_annonces.php" class="btn-annuler">Annuler</a>
+            </div>
         </form>
     </div>
 </main>
+
+<footer>
+    &copy; <?= date('Y') ?> Campus Market — La plateforme de petites annonces dédiée aux étudiants.
+</footer>
 
 </body>
 </html>
