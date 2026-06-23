@@ -213,7 +213,7 @@
                                 
 
                     
-                                <a href="ajouter_favoris.php?id=<?= $annonce['id'] ?>" class="btn btn-outline-danger mt-2 w-100">
+                                <a href="favoris.php?id=<?= $annonce['id'] ?>" class="btn btn-outline-danger mt-2 w-100">
                                     ❤️ Ajouter aux favoris
                                 </a>
                             </div>
