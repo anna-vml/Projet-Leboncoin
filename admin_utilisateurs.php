@@ -1,8 +1,13 @@
 <?php
 session_start();
-require 'config.php';
+require_once 'includes/db.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
+if (!isset($_SESSION['user_id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+
+if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     die("Accès refusé : réservé aux administrateurs.");
 }
 
@@ -34,8 +39,10 @@ if (isset($_GET['admin'])) {
 if (isset($_GET['membre'])) {
     $id = $_GET['membre'];
 
-    $stmt = $pdo->prepare("UPDATE utilisateurs SET role = 'membre' WHERE id = ?");
-    $stmt->execute([$id]);
+    if ($id != $_SESSION['user_id']) {
+        $stmt = $pdo->prepare("UPDATE utilisateurs SET role = 'membre' WHERE id = ?");
+        $stmt->execute([$id]);
+    }
 
     header("Location: admin_utilisateurs.php");
     exit();
@@ -51,72 +58,92 @@ $utilisateurs = $stmt->fetchAll();
     <meta charset="UTF-8">
     <title>Administration</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css?v=80">
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+<div class="admin-page">
 
-    <h1 class="mb-4">Administration des utilisateurs</h1>
+    <div class="admin-header">
+        <h1>🛡️ Administration des utilisateurs</h1>
 
-    <a href="index.php" class="btn btn-secondary mb-3">
-        Retour accueil
-    </a>
+        <a href="index.php" class="btn-retour-accueil">
+            ← Retour accueil
+        </a>
+    </div>
 
-    <table class="table table-bordered table-striped bg-white">
+    <div class="admin-card">
 
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Rôle</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+        <table class="admin-table">
 
-        <tbody>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
 
-        <?php foreach ($utilisateurs as $user): ?>
+            <tbody>
 
-            <tr>
-                <td><?= $user['id'] ?></td>
+            <?php foreach ($utilisateurs as $user): ?>
 
-                <td><?= htmlspecialchars($user['nom']) ?></td>
+                <tr>
+                    <td><?= $user['id'] ?></td>
 
-                <td><?= htmlspecialchars($user['email']) ?></td>
+                    <td><?= htmlspecialchars($user['nom']) ?></td>
 
-                <td><?= htmlspecialchars($user['role']) ?></td>
+                    <td><?= htmlspecialchars($user['email']) ?></td>
 
-                <td>
+                    <td>
+                        <span class="role-badge <?= $user['role'] === 'admin' ? 'role-admin' : 'role-membre' ?>">
+                            <?= htmlspecialchars($user['role']) ?>
+                        </span>
+                    </td>
 
-                    <?php if ($user['role'] !== 'admin'): ?>
-                        <a href="admin_utilisateurs.php?admin=<?= $user['id'] ?>" class="btn btn-success btn-sm">
-                            Promouvoir admin
-                        </a>
-                    <?php else: ?>
-                        <a href="admin_utilisateurs.php?membre=<?= $user['id'] ?>" class="btn btn-warning btn-sm">
-                            Repasser membre
-                        </a>
-                    <?php endif; ?>
+                    <td class="admin-actions">
 
-                    <?php if ($user['id'] != $_SESSION['user_id']): ?>
-                        <a href="admin_utilisateurs.php?supprimer=<?= $user['id'] ?>"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Supprimer cet utilisateur ?');">
-                            Supprimer
-                        </a>
-                    <?php endif; ?>
+                        <?php if ($user['role'] !== 'admin'): ?>
 
-                </td>
-            </tr>
+                            <a href="admin_utilisateurs.php?admin=<?= $user['id'] ?>"
+                               class="btn-admin">
+                                Promouvoir admin
+                            </a>
 
-        <?php endforeach; ?>
+                        <?php else: ?>
 
-        </tbody>
+                            <?php if ($user['id'] != $_SESSION['user_id']): ?>
+                                <a href="admin_utilisateurs.php?membre=<?= $user['id'] ?>"
+                                   class="btn-membre">
+                                    Repasser membre
+                                </a>
+                            <?php endif; ?>
 
-    </table>
+                        <?php endif; ?>
+
+                        <?php if ($user['id'] != $_SESSION['user_id']): ?>
+
+                            <a href="admin_utilisateurs.php?supprimer=<?= $user['id'] ?>"
+                               class="btn-delete-user"
+                               onclick="return confirm('Supprimer cet utilisateur ?');">
+                                Supprimer
+                            </a>
+
+                        <?php endif; ?>
+
+                    </td>
+                </tr>
+
+            <?php endforeach; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
