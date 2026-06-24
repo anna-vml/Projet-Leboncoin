@@ -1,0 +1,198 @@
+[10:56, 24/06/2026] Sarah Zamouri zemouri: <?php
+session_start();
+require_once 'includes/db.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+
+if (!isset($_GET['annonce'])) {
+    die("Annonce introuvable");
+}
+
+$annonce_id = $_GET['annonce'];
+$user_id = $_SESSION['user_id'];
+
+$stmt = $pdo->prepare("SELECT * FROM annonces WHERE id = ?");
+$stmt->execute([$annonce_id]);
+$annonce = $stmt->fetch();
+
+if (!$annonce) {
+    die("Annonce inexistante");
+}
+
+$vendeur_id = $annonce['utilisateur_id'];
+
+$stmt = $pdo->prepare("SELECT * FROM discussions WHERE annonce_id = ? AND acheteur_id = ? AND vendeur_id = ?");
+$stmt->execute([$annonce_id, $user_id, $vendeur_id]);
+$discussion = $stmt->fetch();
+
+if (!$discussion) {
+    $stmt = $pdo->prepare("INSERT INTO discussions (annonce_id, acheteur_id, vendeur_id) VALUES (?, ?, ?)");
+    $stmt->execute([$annonce_id, $user_id, $vendeur_id]);
+    $discussion_id = $pdo->lastInsertId();
+} else {
+    $discussion_id = $discussion['id'];
+}
+
+$stmt = $pdo->prepare("SELECT * FROM messages WHERE discussion_id = ? ORDER BY date_envoi ASC");
+$stmt->execute([$discussion_id]);
+$messages = $stmt->fetchAll();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversation</title>
+    <link rel="stylesheet" href="assets/style.css?v=70">
+</head>
+<body>
+
+    <div class="conversation-page">
+
+        <div class="conversation-header">
+         <h2>💬 Conversation</h2>
+         <a href="discussions.php">← Retour aux messages</a>
+        </div>
+
+        <div class="messages-box">
+
+            <?php foreach($messages as $msg) { ?>
+
+                <?php if($msg['expediteur_id'] == $_SESSION['user_id']) { ?>
+
+                  <div class="message-moi">
+                       <div class="bulle-moi">
+                          <?= htmlspecialchars($msg['message']) ?>
+                       </div>
+                    </div>
+
+                <?php } else { ?>
+
+                <div class="message-autre">
+                    <div class="bulle-autre">
+                        <?= htmlspecialchars($msg['message']) ?>
+                    </div>
+                </div>
+
+            <?php } ?>
+
+            <?php } ?>
+
+        </div>
+
+        <form method="POST" action="envoyer_message.php" class="zone-envoi">
+
+          <input type="hidden" name="discussion_id" value="<?= $discussion_id ?>">
+           <input type="hidden" name="annonce_id" value="<?= $annonce_id ?>">
+
+           <textarea
+              name="message"
+              placeholder="Écrire un message..."
+              required
+            ></textarea>
+
+            <button class="btn-envoyer">
+              Envoyer
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
+[10:56, 24/06/2026] Sarah Zamouri zemouri: conversation.php
+[10:56, 24/06/2026] Sarah Zamouri zemouri: <?php
+session_start();
+require_once 'includes/db.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT discussions.*, annonces.titre
+        FROM discussions
+        INNER JOIN annonces ON discussions.annonce_id = annonces.id
+        WHERE discussions.acheteur_id = ?
+        OR discussions.vendeur_id = ?
+        ORDER BY discussions.date_creation DESC";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$user_id, $user_id]);
+$discussions = $stmt->fetchAll();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mes discussions</title>
+    <link rel="stylesheet" href="assets/style.css?v=60">
+</head>
+<body>
+
+<div class="discussions-page">
+
+    <h1>💬 Mes discussions</h1>
+
+    <a href="index.php">← Retour accueil</a>
+
+    <hr>
+
+    <?php if (empty($discussions)) { ?>
+
+        <p>Aucune discussion pour le moment.</p>
+
+    <?php } else { ?>
+
+        <?php foreach ($discussions as $discussion) { ?>
+
+            <div class="discussion-card">
+                <h3><?= htmlspecialchars($discussion['titre']) ?></h3>
+
+                <a href="conversation.php?annonce=<?= $discussion['annonce_id'] ?>">
+                    Ouvrir la conversation
+                </a>
+            </div>
+
+        <?php } ?>
+
+    <?php } ?>
+
+</div>
+
+</body>
+</html>
+[10:56, 24/06/2026] Sarah Zamouri zemouri: discussions.php
+[10:57, 24/06/2026] Sarah Zamouri zemouri: <?php
+  session_start();
+  require_once 'config/database.php';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      $sender_id = $_SESSION['user_id'];
+      $receiver_id = $_POST['receiver_id'];
+      $message = trim($_POST['message']);
+
+        if (!empty($message)) {
+
+            $stmt = $pdo->prepare("
+              INSERT INTO messages(sender_id, receiver_id, message)
+              VALUES (?, ?, ?)
+           ");
+
+            $stmt->execute([
+              $sender_id,
+              $receiver_id,
+              $message
+            ]);
+        }
+
+        header("Location: conversation.php?user=" . $receiver_id);
+        exit;
+    }
+?>
